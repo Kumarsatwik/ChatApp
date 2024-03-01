@@ -26,8 +26,8 @@ const useGetConversations = () => {
         console.log(err);
         if (err.response.status == 401) {
           toast.error(err.message);
-          // localStorage.removeItem("chat-user");
-          // window.location.href = "/";
+          localStorage.removeItem("chat-user");
+          window.location.href = "/";
         }
         toast.error(err.message);
       } finally {

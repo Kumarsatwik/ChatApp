@@ -1,8 +1,12 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
-
+import dotenv from "dotenv";
+import cors from "cors";
+dotenv.config();
 const app = express();
+
+app.use(cors("*"));
 
 const server = http.createServer(app);
 const clientUrl = process.env.CLIENT_URL;

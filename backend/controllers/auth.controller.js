@@ -4,13 +4,11 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 import bcrypt from "bcryptjs";
-import generateToken from "../utils/generateToken.js";
+// import generateToken from "../utils/generateToken.js";
 
 export const signupUser = async (req, res) => {
   try {
     const { fullName, userName, password, confirmPassword, gender } = req.body;
-
-    console.log(fullName, userName, password, confirmPassword, gender);
 
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
@@ -44,7 +42,6 @@ export const signupUser = async (req, res) => {
     });
 
     if (newUser) {
-      generateToken(newUser._id, res);
       await newUser.save();
       return res.status(200).json({
         _id: newUser._id,
@@ -80,11 +77,13 @@ export const loginUser = async (req, res) => {
     }
     const { userName, password } = req.body;
     const user = await User.findOne({ userName });
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-    if (!user || !isPasswordCorrect) {
+    if (!user) {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
-
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ error: "Invalid Credentials" });
+    }
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",

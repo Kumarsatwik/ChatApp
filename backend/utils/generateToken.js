@@ -8,6 +8,5 @@ const generateToken = (id, res) => {
     sameSite: "none", // prevent CSRF attacks
     secure: true,
   });
-  console.log("generateToken", res.cookies); // undefined
 };
 export default generateToken;

@@ -15,16 +15,14 @@ const useLogin = () => {
         password,
       });
       const data = res.data;
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      console.log(data);
 
       localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data);
     } catch (error) {
       setLoading(false);
-      console.log(error);
-      toast.error(error.message);
+      toast.error(error.response.data.error);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

@@ -14,9 +14,11 @@ export const SocketContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUser] = useState([]);
   const { authUser } = useAuthContext();
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   useEffect(() => {
     if (authUser) {
-      const socket = io("http://localhost:5000", {
+      const socket = io(serverUrl, {
         query: {
           userId: authUser._id,
         },

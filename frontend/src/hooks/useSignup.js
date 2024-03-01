@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useAuthContext } from "../context/AuthContext";
+// import { useAuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  // const { setAuthUser } = useAuthContext();
   const serverUrl = import.meta.env.VITE_SERVER_URL;
-
+  const navigate = useNavigate();
   const signup = async ({
     fullName,
     userName,
@@ -25,28 +27,24 @@ const useSignup = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${serverUrl}/api/auth/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName,
-          userName,
-          password,
-          confirmPassword,
-          gender,
-        }),
+      const res = await axios.post(`${serverUrl}/api/auth/signup`, {
+        fullName,
+        userName,
+        password,
+        confirmPassword,
+        gender,
       });
 
-      const data = await res.json();
+      const data = res.data;
       if (data.error) {
         throw new Error(data.error);
       }
 
-      localStorage.setItem("chat-user", JSON.stringify(data));
+      toast.success("Account created successfully ! Please login");
 
-      setAuthUser(data);
+      // localStorage.setItem("chat-user", JSON.stringify(data));
+      navigate("/");
+      // setAuthUser(data);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -69,7 +67,7 @@ function handleInputErrors({
   confirmPassword,
   gender,
 }) {
-  console.log(fullName, userName, password, confirmPassword, gender);
+  // console.log(fullName, userName, password, confirmPassword, gender);
 
   if (!fullName || !userName || !password || !gender) {
     toast.error("Please fill in all fields");

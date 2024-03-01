@@ -33,6 +33,11 @@ const useSendMessage = () => {
       setMessages([...messages, data]);
     } catch (err) {
       toast.error(err.message);
+      if (err.response.status == 401) {
+        toast.error(err.message);
+        localStorage.removeItem("chat-user");
+        window.location.href = "/";
+      }
     } finally {
       setLoading(false);
     }
