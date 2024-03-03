@@ -22,7 +22,7 @@ This is a real-time chat application built using the MERN (MongoDB, Express.js, 
 - **Deployment:** Render (for backend), Vercel (for frontend)
 
 ## Demo Credential
-- username: test
+- username: test1
 - password : 123456 
 
 ## How to Run
