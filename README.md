@@ -21,6 +21,10 @@ This is a real-time chat application built using the MERN (MongoDB, Express.js, 
 - **Database:** MongoDB Atlas (Cloud-hosted MongoDB database)
 - **Deployment:** Render (for backend), Vercel (for frontend)
 
+## Demo Credential
+- username: test
+- password : 123456 
+
 ## How to Run
 
 1. **Clone the Repository:**
